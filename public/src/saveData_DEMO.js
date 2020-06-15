@@ -131,7 +131,7 @@ function startSaveDataDEMO() {
     //   var trial = jsPsych.currentTrial();
     //   trial.data.event = data.event;
     // },
-    on_finish: function() {
+    on_finish: function(data) {
       $.ajax({
         type: "POST",
         url: "/experiment-data",

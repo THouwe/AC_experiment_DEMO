@@ -18,9 +18,15 @@ var DATE = YYYY + MM + DD;
           var calib_timeline = {
             timeline: []
           };
+          // var TT_instructions_timeline = {
+          //   timeline: []
+          // };
           var TT_timeline = {
             timeline: []
           };
+          // var SRT_instructions_timeline = {
+          //   timeline: []
+          // };
           var SRT_timeline = {
             timeline: []
           };
@@ -36,6 +42,9 @@ var DATE = YYYY + MM + DD;
           var BWDS_timeline = {
             timeline: []
           };
+          // var wordRec_instructions_timeline = {
+          //   timeline: []
+          // };
           var wordRec_timeline = {
             timeline: []
           };
@@ -112,7 +121,8 @@ var DATE = YYYY + MM + DD;
 
     var calib_preAudio = {
       type: 'html-button-response',
-      stimulus: "<p>PART 1: CALIBRATION</p>",
+      stimulus: "<p>PART 1: CALIBRATION</p>" +
+      "<p>Insert instructions here.</p>",
       choices: ["play"]
     };
 
@@ -148,7 +158,7 @@ var DATE = YYYY + MM + DD;
     calib_timeline.timeline.push(instructions_general);
     calib_timeline.timeline.push(calib_preAudio);
     calib_timeline.timeline.push(calib_node);
-    timeline.push(calib_timeline);
+    // timeline.push(calib_timeline);
 ////////////////////////////////////////////////////////////////////////////////
 
 
@@ -158,31 +168,31 @@ var DATE = YYYY + MM + DD;
 ////////////////////////////////////////////////////////////////////////////////
     var tonguetwistersList_A_timeline_variables = [
         {tongueTwist: 'Teich Deich Teich Deich', data: {screen_id: TT_trial, PoA: 'alveolar', rhyme_scheme:'ABAB', tongueTwist: 'Teich Deich Teich Deich'}},
-        {tongueTwist: 'Beil Peil Beil Peil', data: {screen_id: TT_trial, PoA: 'labial', rhyme_scheme:'ABAB', tongueTwist: 'Beil Peil Beil Peil'}},
-        {tongueTwist: 'Kern Gern Kern Gern', data: {screen_id: TT_trial, PoA: 'velar', rhyme_scheme:'ABAB', tongueTwist: 'Kern Gern Kern Gern'}}
+        {tongueTwist: 'Beil Peil Beil Peil', data: {screen_id: TT_trial, PoA: 'labial', rhyme_scheme:'ABAB', tongueTwist: 'Beil Peil Beil Peil'}} //,
+        // {tongueTwist: 'Kern Gern Kern Gern', data: {screen_id: TT_trial, PoA: 'velar', rhyme_scheme:'ABAB', tongueTwist: 'Kern Gern Kern Gern'}}
     ];
 
-    ///////////////////
-        var TT_pre_trial = {
-          type: 'html-button-response',
-          stimulus: jsPsych.timelineVariable('tongueTwist'),
-          choices: ['Start practice trial']
-        };
+///////////////////
+    var TT_pre_trial = {
+      type: 'html-button-response',
+      stimulus: jsPsych.timelineVariable('tongueTwist'),
+      choices: ['Start practice trial']
+    };
 
-        var TT_practice = {
-            type: "audio-audio-down",
-            audio_out: '../../stimuli/TT/met1HzSoft_2min.wav',
-            choices: ['Stop practice trial and start recording'],
-            prompt:  jsPsych.timelineVariable('tongueTwist')
-        };
+    var TT_practice = {
+        type: "audio-audio-down",
+        audio_out: '../../stimuli/TT/met1HzSoft_2min.wav',
+        choices: ['Stop practice trial and start recording'],
+        prompt:  jsPsych.timelineVariable('tongueTwist')
+    };
 
-        var TT_trial = {
-            type: "audio-audio-down",
-            audio_out: '../../stimuli/TT/met2_5HzSoft_2min.wav',
-            choices: ['Stop trial and go to next item'],
-            prompt:  jsPsych.timelineVariable('tongueTwist')
-        };
-    ///////////////////
+    var TT_trial = {
+        type: "audio-audio-down",
+        audio_out: '../../stimuli/TT/met2_5HzSoft_2min.wav',
+        choices: ['Stop trial and go to next item'],
+        prompt:  jsPsych.timelineVariable('tongueTwist')
+    };
+///////////////////
 
         var TTtest_procedure_blockA = {
           timeline: [TT_pre_trial, TT_practice, TT_trial],
@@ -191,24 +201,22 @@ var DATE = YYYY + MM + DD;
           // repetitions: 1
         };
 
-        /* pages 2-4. Instructions */
-        var TTinstructions = {
-          data: {
-            screen_ID: "TTinstructions"
-          },
-          type: "TTinstructions",
-          pages: [
-            // page 2:
-            "<p>PART 2: TONGUE TWISTERS</p>" +
-            "<p>Insert instructions here.</p>"
-          ],
-          show_clickable_nav: true
-        }
+    /* pages 2-4. Instructions */
+    var TTinstructions = {
+      type: 'html-button-response',
+      data: {
+        screen_ID: "TTinstructions"
+      },
+      stimulus: "<p>PART 2: TONGUE TWISTERS</p>" +
+      "<p>Insert instructions here.</p>",
+      choices: ['Continue'],
+      show_clickable_nav: true
+    }
 
-          TT_timeline.timeline = [TTinstructions, TTtest_procedure_blockA];
+    TT_timeline.timeline = [TTinstructions, TTtest_procedure_blockA];
 
-          /////// PUSH CALIBRATION TRIALS TO CALIBRATION TIMELINE /////////
-              timeline.push(TT_timeline);
+/////// PUSH CALIBRATION TRIALS TO CALIBRATION TIMELINE /////////
+    // timeline.push(TT_timeline);
 ////////////////////////////////////////////////////////////////////////////////
 
 
@@ -216,35 +224,41 @@ var DATE = YYYY + MM + DD;
 ////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////// SiNRT ////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-var instructions_SRT = {
-  data: {screen_id: "instructions_SRT"},
-  type: 'html-button-response',
-  stimulus: "<p>PART 3: SRT</p>" +
-  "<p>Insert instructions here.</p>",
-  choices: ['Continue'],
-  on_finish: function(data){
-          }
-};
+    var instructions_SRT = {
+      data: {screen_id: "instructions_SRT"},
+      type: 'html-button-response',
+      stimulus: "<p>PART 3: SRT. Insert instructions here.</p>",
+      choices: ['Continue'],
+      show_clickable_nav: true,
+      on_finish: function() {
+        console.log("INSTRUCTIONS SRT")
+      }
+    };
+    // SRT_instructions_timeline.timeline = instructions_SRT;
+    //   timeline.push(SRT_instructions_timeline);
 
-var instructions_SiNRT = {
-  data: {screen_id: "instructions_SiNRT"},
-  type: 'html-button-response',
-  stimulus: "<p>As part of this test, you will hear numbers from 0 to 9 in German" +
-  " that are difficult to unserdtand because they are embedded in noise.</p>" +
-  "<p>Your task is to select the button corresponding to the correct number.</p>" +
-  "<p>Noise levels are increased throughout the test, meaning that it will become" +
-  " harder over time and you will not get feedback for your responses.</p>" +
-  "<p>Press 'Continue' to proceed to a practice trial</p>" +
-  "<p> </p>" +
-  "<p> </p>" +
-  "<p>NOTE : the script is initialised with the `use_webaudio` parameter" +
-  "of jspsych.init set to `false` for testing on local machine; "  +
-  "remember to change for testing on server</p>",
-  choices: ['Continue'],
-  on_finish: function(data){
-          }
-};
-// timeline.push(pre_audio);
+// var instructions_SiNRT = {
+//   data: {screen_id: "instructions_SiNRT"},
+//   type: 'html-button-response',
+//   stimulus: "<p>As part of this test, you will hear numbers from 0 to 9 in German" +
+//   " that are difficult to unserdtand because they are embedded in noise.</p>" +
+//   "<p>Your task is to select the button corresponding to the correct number.</p>" +
+//   "<p>Noise levels are increased throughout the test, meaning that it will become" +
+//   " harder over time and you will not get feedback for your responses.</p>" +
+//   "<p>Press 'Continue' to proceed to a practice trial</p>" +
+//   "<p> </p>" +
+//   "<p> </p>" +
+//   "<p>NOTE : the script is initialised with the `use_webaudio` parameter" +
+//   "of jspsych.init set to `false` for testing on local machine; "  +
+//   "remember to change for testing on server</p>",
+//   choices: ['Continue'],
+//   on_finish: function(data){
+//           }
+// };
+
+var block_count = 0;
+// var keep_going = 1;
+var next_block = 0;
 
 var fixation_cross = {
   data: {screen_id: "fixation"},
@@ -275,9 +289,7 @@ var start_SiNRT = {
   data: {screen_id: "start_SiNRT"},
   type: 'html-button-response',
   stimulus: "<p>Click 'Start Test' to get started</p>",
-  choices: ['Start Test'],
-  on_finish: function(data){
-          }
+  choices: ['Start Test']
 };
 
 var stimuli_0dB = [
@@ -287,10 +299,6 @@ var stimuli_0dB = [
   {stimulus: stimDir_SiN + "Speaker07_Digit3_0dB_SNR.wav", data: {screen_id: SiNRT_trials, dB_SNR:0, speaker:7, digit_id: "3"}},
   {stimulus: stimDir_SiN + "Speaker08_Digit2_0dB_SNR.wav", data: {screen_id: SiNRT_trials, dB_SNR:0, speaker:8, digit_id: "2"}}
 ];
-
-var block_count = 0;
-// var keep_going = 1;
-var next_block = 0;
 
 var SiNRT_trials = {
  type: 'audio-button-response-simple',
@@ -339,7 +347,7 @@ var procedure_0dB = {
  }
 };
 
-SiNRT_timeline.timeline.push(instructions_SiNRT);
+// SiNRT_timeline.timeline.push(instructions_SiNRT);
 SiNRT_timeline.timeline.push(procedure_practiceSiNRT);
 SiNRT_timeline.timeline.push(procedure_0dB);
 SiNRT_timeline.timeline.push(after_block);
@@ -362,7 +370,6 @@ var instructions_NVSRT = {
   on_finish: function(data){
           }
 };
-// timeline.push(pre_audio);
 
 var fixation_cross = {
   data: {screen_id: "fixation"},
@@ -426,24 +433,24 @@ var NVSRT_trials = {
  }
 };
 
-var after_block = {
- data: {screen_id: "fixation"},
- type: 'html-keyboard-response',
- stimulus: "<div style='font-size: 60px'><b>+</b></div>",
- choices: jsPsych.NO_KEYS,
- trial_duration: 100,
- on_finish: function(){
-   console.log("MOVING TO NEXT BLOCK..."),
-   console.log("COUNTER BEFORE RESET = " + block_count)
-   if (block_count != 0){
-       next_block = 1;
-       block_count = 0;
-     } else {
-       next_block = 0;
-     }
-   console.log("COUNTER AFTER BLOCK RESET = " + block_count)
-   }
-}
+// var after_block = {
+//  data: {screen_id: "fixation"},
+//  type: 'html-keyboard-response',
+//  stimulus: "<div style='font-size: 60px'><b>+</b></div>",
+//  choices: jsPsych.NO_KEYS,
+//  trial_duration: 100,
+//  on_finish: function(){
+//    console.log("MOVING TO NEXT BLOCK..."),
+//    console.log("COUNTER BEFORE RESET = " + block_count)
+//    if (block_count != 0){
+//        next_block = 1;
+//        block_count = 0;
+//      } else {
+//        next_block = 0;
+//      }
+//    console.log("COUNTER AFTER BLOCK RESET = " + block_count)
+//    }
+// }
 
 var procedure_practiceNVSRT = {
  timeline: [fixation_cross, practice_trial_NVS, start_NVSRT]
@@ -457,7 +464,7 @@ var procedure_120pt = {
  }
 };
 
-NVSRT_timeline.timeline.push(instructions_NVSRT);
+// NVSRT_timeline.timeline.push(instructions_NVSRT);
 NVSRT_timeline.timeline.push(procedure_practiceNVSRT);
 NVSRT_timeline.timeline.push(procedure_120pt);
 NVSRT_timeline.timeline.push(after_block);
@@ -466,9 +473,9 @@ NVSRT_timeline.timeline.push(after_block);
 //////////////////////// randomise order of SRTs ///////////////////////////////
     var randomizedSRTblocks = jsPsych.randomization.shuffle([SiNRT_timeline, NVSRT_timeline]);
 
-      // TT_timeline = TT_timeline.timeline.concat(randomizedTTblocks);
-      SRT_timeline.timeline = [instructions_SRT, randomizedSRTblocks];
-      timeline.push(SRT_timeline);
+      SRT_timeline.timeline = randomizedSRTblocks;
+      // SRT_timeline.timeline = [instructions_SRT, randomizedSRTblocks];
+      // timeline.push(SRT_timeline);
 ////////////////////////////////////////////////////////////////////////////////
 
 
@@ -674,7 +681,7 @@ NVSRT_timeline.timeline.push(after_block);
     FWDS_timeline.timeline.push(FWDS_trial_1);
     FWDS_timeline.timeline.push(FWDS_trial_2);
     FWDS_timeline.timeline.push(FWDS_trial_3);
-    timeline.push(FWDS_timeline);
+    // timeline.push(FWDS_timeline);
 ////////////////////////////////////////////////////////////////////////////////
 
 
@@ -867,21 +874,23 @@ NVSRT_timeline.timeline.push(after_block);
       BWDS_timeline.timeline.push(BWDS_trial_1);
       BWDS_timeline.timeline.push(BWDS_trial_2);
       BWDS_timeline.timeline.push(BWDS_trial_3);
-      timeline.push(BWDS_timeline);
+      // timeline.push(BWDS_timeline);
 
 
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////// Word Rec SiN ////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 var instructions_wordRec = {
-  data: {screen_id: "instructions_SiNRT"},
+  data: {screen_id: "instructions_wordRec"},
   type: 'html-button-response',
-  stimulus: "<p>PART 5: WORD RECOGNITION.</p>" +
-  "<p>Insert instructions here.</p>",
+  stimulus: "<p>PART 5: WORD RECOGNITION. Insert instructions here.</p>",
   choices: ['Continue'],
-  on_finish: function(data){
-          }
+  on_finish: function() {
+    console.log("INSTRUCTIONS WORD REC")
+  }
 };
+// wordRec_instructions_timeline.timeline = instructions_wordRec;
+// timeline.push(wordRec_instructions_timeline);
 
 var instructions_wordRec_SiN = {
   data: {screen_id: "instructions_SiNRT"},
@@ -917,9 +926,7 @@ var start_wordRecSiN = {
 var stimuli_list1SiN = [
   {stimulus_list1SiN: stimDir_SiNwords_list1 + "Affe.wav", data_list1SiN: {screen_id: audioOut_list1SiN, dB_SNR:0, word_id: "Affe"}},
   {stimulus_list1SiN: stimDir_SiNwords_list1 + "Bogen.wav", data_list1SiN: {screen_id: audioOut_list1SiN, dB_SNR:0, word_id: "Bogen"}},
-  {stimulus_list1SiN: stimDir_SiNwords_list1 + "Bohne.wav", data_list1SiN: {screen_id: audioOut_list1SiN, dB_SNR:0, word_id: "Bohne"}},
-  {stimulus_list1SiN: stimDir_SiNwords_list1 + "Ei.wav", data_list1SiN: {screen_id: audioOut_list1SiN, dB_SNR:0, word_id: "Ei"}},
-  {stimulus_list1SiN: stimDir_SiNwords_list1 + "Erdbeere.wav", data_list1SiN: {screen_id: audioOut_list1SiN, dB_SNR:0, word_id: "Erdbeere"}}
+  {stimulus_list1SiN: stimDir_SiNwords_list1 + "Bohne.wav", data_list1SiN: {screen_id: audioOut_list1SiN, dB_SNR:0, word_id: "Bohne"}}
 ];
 
 var preAudio_wordRecSiN = {
@@ -997,9 +1004,7 @@ var start_wordRecNVS = {
 var stimuli_list1NVS = [
   {stimulus_list1NVS: stimDir_NVSwords_list1 + "Bank.wav", data_list1NVS: {screen_id: audioOut_list1NVS, nrNvChan:5, word_id: "Bank"}},
   {stimulus_list1NVS: stimDir_NVSwords_list1 + "Baum.wav", data_list1NVS: {screen_id: audioOut_list1NVS, nrNvChan:5, word_id: "Baum"}},
-  {stimulus_list1NVS: stimDir_NVSwords_list1 + "Birne.wav", data_list1NVS: {screen_id: audioOut_list1NVS, nrNvChan:5, word_id: "Birne"}},
-  {stimulus_list1NVS: stimDir_NVSwords_list1 + "Blume.wav", data_list1NVS: {screen_id: audioOut_list1NVS, nrNvChan:5, word_id: "Blume"}},
-  {stimulus_list1NVS: stimDir_NVSwords_list1 + "Brille.wav", data_list1NVS: {screen_id: audioOut_list1NVS, nrNvChan:5, word_id: "Brille"}}
+  {stimulus_list1NVS: stimDir_NVSwords_list1 + "Birne.wav", data_list1NVS: {screen_id: audioOut_list1NVS, nrNvChan:5, word_id: "Birne"}}
 ];
 
 var preAudio_wordRecNVS = {
@@ -1042,8 +1047,9 @@ var procedure_list1NVS = {
 ////////////////////////// randomise SiN and NVS ///////////////////////////////
 var randomizedWordRecBlocks = jsPsych.randomization.shuffle([wordRecSiN_timeline, wordRecNVS_timeline]);
 
-  wordRec_timeline.timeline = [instructions_wordRec, randomizedWordRecBlocks];
-  timeline.push(wordRec_timeline);
+  // wordRec_timeline.timeline = [instructions_wordRec, randomizedWordRecBlocks];
+  wordRec_timeline.timeline = randomizedWordRecBlocks;
+  // timeline.push(wordRec_timeline);
 ////////////////////////////////////////////////////////////////////////////////
 
 
@@ -1057,7 +1063,9 @@ function startExpDEMO() {
   console.log("startExp reached")
   /* start the experiment */
   jsPsych.init({
-    timeline: timeline,
+    // timeline: timeline,
+    timeline: [calib_timeline, TT_timeline, instructions_SRT, SRT_timeline,
+    FWDS_timeline, BWDS_timeline, instructions_wordRec, wordRec_timeline],
     use_webaudio: false,
     // on_interaction_data_update: function(data) {
     //   var trial = jsPsych.currentTrial();

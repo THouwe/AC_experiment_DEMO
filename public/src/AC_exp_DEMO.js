@@ -84,40 +84,40 @@ var DATE = YYYY + MM + DD;
       }
     };
 
-//     /* pages 2-4. Instructions */
-//     var instructions_general = {
-//       data: {
-//         screen_ID: "Instructions"
-//       },
-//       type: "instructions",
-//       pages: [
-//         // page 2:
-//         "<p>This experiment is about speech recognition.</p>" +
-//         "<p>To begin with, make sure that you are in a silent environment.</p>" +
-//         "<div style='float: left;'><img src='../../stimuli/calibration/nN3.jpg' width='100' height='100' /img></div>" +
-//         "<div style='float: right;'><img src='../../stimuli/calibration/nN1.jpg' width='100' height='100' /img></div>" +
-//         "<div><img src='../../stimuli/calibration/nN2.jpg' width='100' height='100' /img></div>",
-//         // "<div style="width: 500px;"> +
-//         //   <div style="float: left; width: 200px;"><img src='jspsych-6.1.0/examples/img/SRT/nN3.jpg'/img></div> +
-//         //   <div style="float: left; width: 100px;"><img src='jspsych-6.1.0/examples/img/SRT/nN1.jpg'/img></div> +
-//         //   <div style="float: left; width: 200px;"><img src='jspsych-6.1.0/examples/img/SRT/nN2.jpg'/img></div> +
-//         //   <br style="clear: left;" />
-//         // </div>",
-//         // "<div><img src='jspsych-6.1.0/examples/img/SRT/nN3.jpg' align="left" /> +
-//         // <img src='jspsych-6.1.0/examples/img/SRT/nN1.jpg' align="left" /> +
-//         // <img src='jspsych-6.1.0/examples/img/SRT/nN2.jpg' /></div>",
-//         // page 3:
-//         "<p>Please, wear headphones and make yourself comfortable.</p>" +
-//         "<div style='float: left;'><img src='../../stimuli/calibration/he.jpg' width='100' height='100' /img></div>" +
-//         "<div style='float: right;'><img src='../../stimuli/calibration/re.jpg' width='100' height='100' /img></div>",
-//         // page 4:
-//         "<p>Before starting the experiment, we ask you to regulate the volume " +
-//         "of your loudspeakers while listening to a sound (in the next page) " +
-//         "to a level that allows you to easily hear the sound, but which is, " +
-//         "at the same time, comfortable.</p>"
-//       ],
-//       show_clickable_nav: true
-//     }
+    /* pages 2-4. Instructions */
+    var instructions_general = {
+      data: {
+        screen_ID: "Instructions"
+      },
+      type: "instructions",
+      pages: [
+        // page 2:
+        "<p>This experiment is about speech recognition.</p>" +
+        "<p>To begin with, make sure that you are in a silent environment.</p>" +
+        "<div style='float: left;'><img src='../../stimuli/calibration/nN3.jpg' width='100' height='100' /img></div>" +
+        "<div style='float: right;'><img src='../../stimuli/calibration/nN1.jpg' width='100' height='100' /img></div>" +
+        "<div><img src='../../stimuli/calibration/nN2.jpg' width='100' height='100' /img></div>",
+        // "<div style="width: 500px;"> +
+        //   <div style="float: left; width: 200px;"><img src='jspsych-6.1.0/examples/img/SRT/nN3.jpg'/img></div> +
+        //   <div style="float: left; width: 100px;"><img src='jspsych-6.1.0/examples/img/SRT/nN1.jpg'/img></div> +
+        //   <div style="float: left; width: 200px;"><img src='jspsych-6.1.0/examples/img/SRT/nN2.jpg'/img></div> +
+        //   <br style="clear: left;" />
+        // </div>",
+        // "<div><img src='jspsych-6.1.0/examples/img/SRT/nN3.jpg' align="left" /> +
+        // <img src='jspsych-6.1.0/examples/img/SRT/nN1.jpg' align="left" /> +
+        // <img src='jspsych-6.1.0/examples/img/SRT/nN2.jpg' /></div>",
+        // page 3:
+        "<p>Please, wear headphones and make yourself comfortable.</p>" +
+        "<div style='float: left;'><img src='../../stimuli/calibration/he.jpg' width='100' height='100' /img></div>" +
+        "<div style='float: right;'><img src='../../stimuli/calibration/re.jpg' width='100' height='100' /img></div>",
+        // page 4:
+        "<p>Before starting the experiment, we ask you to regulate the volume " +
+        "of your loudspeakers while listening to a sound (in the next page) " +
+        "to a level that allows you to easily hear the sound, but which is, " +
+        "at the same time, comfortable.</p>"
+      ],
+      show_clickable_nav: true
+    }
 //
 //     var calib_preAudio = {
 //       type: 'html-button-response',
@@ -1064,7 +1064,7 @@ function startExpDEMO() {
   /* start the experiment */
   jsPsych.init({
     // timeline: timeline,
-    timeline: welcome,
+    timeline: [welcome, instructions_general],
     // timeline: [calib_timeline, TT_timeline, instructions_SRT, SRT_timeline,
     // FWDS_timeline, BWDS_timeline, instructions_wordRec, wordRec_timeline],
     use_webaudio: false,

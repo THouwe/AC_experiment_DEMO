@@ -109,9 +109,9 @@ var DATE = YYYY + MM + DD;
 
 /////// PUSH CALIBRATION TRIALS TO CALIBRATION TIMELINE /////////
 timeline.push(welcome);
-timeline.push(instructions_general);
-timeline.push(calib_preAudio);
-timeline.push(calib_node);
+// timeline.push(instructions_general);
+// timeline.push(calib_preAudio);
+// timeline.push(calib_node);
     // timeline.push(calib_timeline);
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -132,6 +132,7 @@ function startSaveDataDEMO() {
     //   trial.data.event = data.event;
     // },
     on_finish: function(data) {
+      jsPsych.data.displayData();
       $.ajax({
         type: "POST",
         url: "/experiment-data",
@@ -140,11 +141,13 @@ function startSaveDataDEMO() {
       })
 
       .done(function(){
+        console.log("done");
         window.location.href = "finish";
         // alert("You have completed the experiment and the data have been saved!");
       })
 
       .fail(function(){
+        console.log("fail");
         alert("Problem occurred while writing data to Dropbox. " +
               "Data will be saved to your computer. " +
               "Please cpontact the experimenter!");
@@ -155,7 +158,6 @@ function startSaveDataDEMO() {
         window.location.href = "finish";
       })
 
-      // jsPsych.data.displayData();
     }
   });
 };

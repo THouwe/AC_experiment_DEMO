@@ -30,24 +30,42 @@ app.set("view engine", "html");
 
 // ROUTING
 app.get("/", function (request, response) {
+  var respID = response.query.r;
   response.render("index_AC_DEMO.html")
 });
 app.get("/finish", function (request, response) {
   response.render("finish.html")
 });
+// app.get("/", function (request, response) {
+//   response.send("saveData_DEMO.html" + request.query.r + " + " + request.query.c)
+// });
 
 app.post("/experiment-data", function(request,response) {
   // retrieve the data and convert json to csv
   DATA_CSV = json2csv(request.body);
-  // save the data
+  // // save the data
   var row = DATA_CSV.split("\n");
-  ID_DATE_index = row[0].split(",").indexOf('"ID_DATE"');
-  // ID_DATE_index = row[0].split(separator: ",").indexOf("ID_DATE");
-  ID_DATE = row[1].split(",")[ID_DATE_index];
-  // ID_DATE = row[1].split(separator: ",")[ID_DATE_index];
-  ID_DATE = ID_DATE.replace(/"/g, "");
-  // ID_DATE = ID_DATE.replace(searchValue: /"/g, replaceValue: "");
-  filename = ID_DATE + "_DEMO.csv";
+  // ID_DATE_index = row[0].split(",").indexOf('"ID_DATE"');
+  // // ID_DATE_index = row[0].split(separator: ",").indexOf("ID_DATE");
+  // ID_DATE = row[1].split(",")[ID_DATE_index];
+  // // ID_DATE = row[1].split(separator: ",")[ID_DATE_index];
+  // ID_DATE = ID_DATE.replace(/"/g, "");
+  // // ID_DATE = ID_DATE.replace(searchValue: /"/g, replaceValue: "");
+  // // filename = ID_DATE + "_DEMO.csv";
+
+  var TODAY = new Date();
+  var SEC = String(TODAY.getSeconds()).padStart(2, '0');
+  var MN = String(TODAY.getMinutes()).padStart(2, '0');
+  var HH = String(TODAY.getHours()).padStart(2, '0');
+  var DD = String(TODAY.getDate()).padStart(2, '0');
+  var MM = String(TODAY.getMonth() + 1).padStart(2, '0');
+  var YYYY = String(TODAY.getFullYear());
+  var DATE = YYYY + MM + DD + "_" + HH + MN + SEC;
+
+  ID_DATE = DATE;
+  console.log("ID_DATE = " + ID_DATE);
+
+  filename = respID + "_" + ID_DATE + ".csv";
   saveDropbox(DATA_CSV, filename);
   // console.log(DATA_CSV);
   // response.end();

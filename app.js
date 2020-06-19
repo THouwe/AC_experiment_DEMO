@@ -30,7 +30,7 @@ app.set("view engine", "html");
 
 // ROUTING
 app.get("/", function (request, response) {
-  var respID = response.query.r;
+  // var respID = response.query.r;
   response.render("index_AC_DEMO.html")
 });
 app.get("/finish", function (request, response) {
@@ -65,7 +65,8 @@ app.post("/experiment-data", function(request,response) {
   ID_DATE = DATE;
   console.log("ID_DATE = " + ID_DATE);
 
-  filename = respID + "_" + ID_DATE + ".csv";
+  // filename = respID + "_" + ID_DATE + ".csv";
+  filename = ID_DATE + ".csv";
   saveDropbox(DATA_CSV, filename);
   // console.log(DATA_CSV);
   // response.end();

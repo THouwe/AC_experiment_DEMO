@@ -69,7 +69,7 @@ app.post("/experiment-data", function(request,response) {
   filename = ID_DATE + ".csv";
   saveDropbox(DATA_CSV, filename);
   // console.log(DATA_CSV);
-  // response.end();
+  response.end();
 })
 
 // START THE SERVER

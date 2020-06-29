@@ -180,14 +180,16 @@ var DATE = YYYY + MM + DD;
     };
 
     var TT_practice = {
-        type: "audio-audio-down",
+        // type: "audio-audio-down",
+        type: "audio-upload-audio",
         audio_out: '../../stimuli/TT/met1HzSoft_2min.wav',
         choices: ['Stop practice trial and start recording'],
         prompt:  jsPsych.timelineVariable('tongueTwist')
     };
 
     var TT_trial = {
-        type: "audio-audio-down",
+        // type: "audio-audio-down",
+        type: "audio-upload-audio",
         audio_out: '../../stimuli/TT/met2_5HzSoft_2min.wav',
         choices: ['Stop trial and go to next item'],
         prompt:  jsPsych.timelineVariable('tongueTwist')
@@ -946,8 +948,8 @@ var audioOut_list1SiN = {
 };
 
 var audioIn_list1SiN = {
-    // type: "image-audio-response-II",
-    type: "download-audio",
+    type: "upload-audio",
+    // type: "download-audio",
     choices: ['Stop']
 };
 
@@ -1024,8 +1026,8 @@ var audioOut_list1NVS = {
 };
 
 var audioIn_list1NVS = {
-    // type: "image-audio-response-II",
-    type: "download-audio",
+    type: "upload-audio",
+    // type: "download-audio",
     choices: ['Stop']
 };
 
@@ -1068,6 +1070,7 @@ function startExpDEMO() {
     timeline: [calib_timeline, TT_timeline, instructions_SRT, SRT_timeline,
     FWDS_timeline, BWDS_timeline, instructions_wordRec, wordRec_timeline],
     use_webaudio: false,
+    // use_webaudio: true,
     // on_interaction_data_update: function(data) {
     //   var trial = jsPsych.currentTrial();
     //   trial.data.event = data.event;

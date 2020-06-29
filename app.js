@@ -68,8 +68,8 @@ app.post("/experiment-data", function(request,response) {
   // console.log("ID_DATE = " + ID_DATE);
 
   // filename = respID + "_" + ID_DATE + ".csv";
-  filename = ID_DATE + ".csv";
-  saveDropbox(DATA_CSV, filename);
+  filename_CSV = ID_DATE + ".csv";
+  saveDropbox(DATA_CSV, filename_CSV);
   // console.log(DATA_CSV);
   response.end();
 })
@@ -89,10 +89,10 @@ app.post('/recordings', upload.any(), (req, res) => {
     ID_DATE = DATE;
 
     // var filename = new Date().toISOString();
-    var filename = ID_DATE + '.wav';
-    console.log('Recording arrivato: ' + filename);
+    var filename_WAV = ID_DATE + '.wav';
+    console.log('Recording arrivato: ' + filename_WAV);
     var recording = req.files[0].buffer;
-    saveDropbox(recording, filename + '.wav')
+    saveDropbox(recording, filename_WAV)
 });
 
 // START THE SERVER

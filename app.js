@@ -90,14 +90,16 @@ app.post('/recordings', upload.any(), (req, res) => {
 
     // var filename = new Date().toISOString();
     var filename_WAV = ID_DATE + '.wav';
-    console.log('Recording arrivato: ' + filename_WAV);
+    // console.log('Recording arrivato: ' + filename_WAV);
     var recording = req.files[0].buffer;
-    saveDropbox(recording, filename_WAV)
+    let outcome = saveDropbox(recording, filename_WAV);
+    res.end();
+    return outcome;
 });
 
 // START THE SERVER
 // var server = app.listen(3000, function(){
 var server = app.listen(process.env.PORT, function(){
-    console.log("listening to posrt %d", server.address().port);
+    console.log("listening on port %d", server.address().port);
     // console.log(process.env)
 });

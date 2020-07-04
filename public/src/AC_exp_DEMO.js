@@ -173,6 +173,7 @@ var DATE = YYYY + MM + DD;
     ];
 
 ///////////////////
+
     var TT_pre_trial = {
       type: 'html-button-response',
       stimulus: jsPsych.timelineVariable('tongueTwist'),
@@ -199,7 +200,7 @@ var DATE = YYYY + MM + DD;
         var TTtest_procedure_blockA = {
           timeline: [TT_pre_trial, TT_practice, TT_trial],
           timeline_variables: tonguetwistersList_A_timeline_variables,
-          randomize_order: true
+          randomize_order: true,
           // repetitions: 1
         };
 
@@ -275,7 +276,7 @@ var stimDir_SiN = "../../stimuli/SRT/SiN/";
 var practice_trial_SiN = {
   type: 'audio-button-response-simple',
   data: {screen_id: "practice_trial", dB_SNR:0, speaker:25, digit_id: "6"},
-  stimulus:stimDir_SiN + "AAA_practiceTrial_Speaker25_Digit6_0dB_SNR.wav",
+  stimulus: stimDir_SiN + "AAA_practiceTrial_Speaker25_Digit6_0dB_SNR.wav",
   choices: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'],
   prompt: "<p>What number was said?</p>",
   on_finish: function(data){
@@ -315,6 +316,7 @@ var SiNRT_trials = {
    } else {
      data.accuracy = 0
    }
+   console.log('SiNRT_trials digit ' + data.digit.id);
  }
 };
 
@@ -341,18 +343,24 @@ var procedure_practiceSiNRT = {
  timeline: [fixation_cross, practice_trial_SiN, start_SiNRT]
 };
 
+// Attempt by fh. To no avail.
+var wrapper_0dB = {
+   timeline_variables: stimuli_0dB,
+   timeline: SiNRT_trials
+};
+
 var procedure_0dB = {
- timeline: [fixation_cross, SiNRT_trials],
- timeline_variables: stimuli_0dB,
- on_finish: function(){
+ timeline: [fixation_cross, wrapper_0dB],
+  on_finish: function(){
    console.log("block 1/16 count = " + block_count)
  }
 };
 
 // SiNRT_timeline.timeline.push(instructions_SiNRT);
-SiNRT_timeline.timeline.push(procedure_practiceSiNRT);
+// SiNRT_timeline.timeline.push(procedure_practiceSiNRT);
 SiNRT_timeline.timeline.push(procedure_0dB);
 SiNRT_timeline.timeline.push(after_block);
+
 
 var instructions_NVSRT = {
   data: {screen_id: "instructions_NVSRT"},
@@ -898,7 +906,7 @@ var instructions_wordRec_SiN = {
   data: {screen_id: "instructions_SiNRT"},
   type: 'html-button-response',
   stimulus: "<p>As part of this test, you will hear some words in German" +
-  " that are difficult to unserdtand because they are embedded in noise.</p>" +
+  " that are difficult to understand because they are embedded in noise.</p>" +
   "<p>Your task is to repeat aloud the word heard when you are prompted to do so.</p>" +
   "<p>The fixation cross indicates that a word is being presented and a red " +
   " 'recording dot' indicates that you should repeat the word.</p>" +
@@ -976,7 +984,7 @@ var instructions_wordRec_NVS = {
   data: {screen_id: "instructions_NVSRT"},
   type: 'html-button-response',
   stimulus: "<p>As part of this test, you will hear some words in German" +
-  " that are difficult to unserdtand because they are embedded in noise.</p>" +
+  " that are difficult to understand because they are embedded in noise.</p>" +
   "<p>Your task is to repeat aloud the word heard when you are prompted to do so.</p>" +
   "<p>The fixation cross indicates that a word is being presented and a red " +
   " 'recording dot' indicates that you should repeat the word.</p>" +
@@ -1063,13 +1071,34 @@ var randomizedWordRecBlocks = jsPsych.randomization.shuffle([wordRecSiN_timeline
 ////////////////////////////////////////////////////////////////////////////////
 function startExpDEMO() {
   console.log("startExp reached")
+
+  var audioFiles = [stimDir_SiN + "Speaker01_Digit5_0dB_SNR.wav",
+   stimDir_SiN + "Speaker05_Digit8_0dB_SNR.wav",
+   stimDir_SiN + "Speaker06_Digit6_0dB_SNR.wav",
+   stimDir_SiN + "Speaker07_Digit3_0dB_SNR.wav",
+   stimDir_SiN + "Speaker08_Digit2_0dB_SNR.wav",
+   stimDir_NVS + "Speaker16_Digit4_120envDep_pt.wav",
+   stimDir_NVS + "Speaker21_Digit9_120envDep_pt.wav",
+   stimDir_NVS + "Speaker25_Digit3_120envDep_pt.wav",
+   stimDir_NVS + "Speaker33_Digit0_120envDep_pt.wav",
+   stimDir_NVS + "Speaker48_Digit5_120envDep_pt.wav",
+   stimDir_SiNwords_list1 + "Affe.wav",
+   stimDir_SiNwords_list1 + "Bogen.wav",
+   stimDir_SiNwords_list1 + "Bohne.wav",
+   stimDir_NVSwords_list1 + "Bank.wav",
+   stimDir_NVSwords_list1 + "Baum.wav",
+   stimDir_NVSwords_list1 + "Birne.wav",
+];
+
   /* start the experiment */
   jsPsych.init({
     // timeline: timeline,
+    // timeline: [TT_timeline],
     // timeline: [welcome, instructions_general],
-    timeline: [calib_timeline, TT_timeline, instructions_SRT, SRT_timeline,
-    FWDS_timeline, BWDS_timeline, instructions_wordRec, wordRec_timeline],
-    use_webaudio: false,
+   preload_audio: audioFiles,
+   timeline: [calib_timeline, TT_timeline, instructions_SRT, SRT_timeline,
+     FWDS_timeline, BWDS_timeline, instructions_wordRec, wordRec_timeline],
+    use_webaudio: true,
     // use_webaudio: true,
     // on_interaction_data_update: function(data) {
     //   var trial = jsPsych.currentTrial();
@@ -1084,7 +1113,8 @@ function startExpDEMO() {
       })
 
       .done(function(){
-        window.location.href = "finish";
+        jsPsych.data.displayData();
+        // window.location.href = "finish";
         // alert("You have completed the experiment and the data have been saved!");
       })
 

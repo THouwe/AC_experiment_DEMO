@@ -2,19 +2,30 @@ require("dotenv").config();
 var Dropbox = require("dropbox").Dropbox;
 const fetch = require("node-fetch");
 
+const UPLOAD_FILE_SIZE_LIMIT = 150 * 1024 * 1024;
+
 // https://www.dropbox.com/developers/documentation/javascript#tutorial
 const dbx = new Dropbox({
   accessToken: process.env.DROPBOXACCESSTOKEN,
-  // accessToken: process.env,
-  fetch
+  fetch: fetch
 });
 
 saveDropbox = function(content, filename) {
-  // dbx.filesUpload( arg: {
-  dbx.filesUpload({
-    path: "/" + filename,
-    contents: content
-  })
+  let status = undefined;
+  if (filename.size > UPLOAD_FILE_SIZE_LIMIT) {
+    console.error("File too big");
+    return 403;
+  }
+  dbx.filesUpload({ path: "/" + filename, contents: content })
+    .then(function(response) {
+       console.log(response.name + ' - ' + response.id);
+       status = 200;
+    })
+    .catch(function(error) {
+       console.error(error.error_summary);
+       status = 409;
+    });
+    return status;
 };
 
 // https://gist.github.com/maciejjankowski/2db91642fb9eaa771111f2c0538e4560

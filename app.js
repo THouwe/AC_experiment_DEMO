@@ -47,6 +47,11 @@ app.post("/experiment-data", function(request,response) {
   DATA_CSV = json2csv(request.body);
   // // save the data
   var row = DATA_CSV.split("\n");
+  var part_ID_index = row[0].split(",").indexOf('"part_ID"');
+  // // part_ID_index = row[0].split(separator: ",").indexOf("part_ID");
+  var part_ID = row[1].split(",")[part_ID_index];
+  // // part_ID = row[1].split(separator: ",")[part_ID_index];
+  part_ID = part_ID.replace(/"/g, "");
   // ID_DATE_index = row[0].split(",").indexOf('"ID_DATE"');
   // // ID_DATE_index = row[0].split(separator: ",").indexOf("ID_DATE");
   // ID_DATE = row[1].split(",")[ID_DATE_index];
@@ -86,12 +91,13 @@ app.post('/recordings', upload.any(), (req, res) => {
     var YYYY = String(TODAY.getFullYear());
     var DATE = YYYY + MM + DD + "_" + HH + MN + SEC;
 
-    ID_DATE = DATE;
-
-    // var filename = new Date().toISOString();
-    var filename_WAV = ID_DATE + '.wav';
-    // console.log('Recording arrivato: ' + filename_WAV);
     var recording = req.files[0].buffer;
+    var part_ID = req.files[1].buffer;
+    //console.log("part_ID: " + part_ID);
+    // var filename = new Date().toISOString();
+    var filename_WAV = part_ID + '_' + DATE + '.wav';
+    // console.log('Recording arrivato: ' + filename_WAV);
+
     let outcome = saveDropbox(recording, filename_WAV);
     res.end();
     return outcome;

@@ -462,8 +462,13 @@ jsPsych.plugins["audio-upload-audio"] = (function() {
 
       function sendTheWav(blob) {
         var fd = new FormData();
+
         var recording = new Blob([blob], { type: "audio/wav" });
         fd.append("recording", recording);
+
+        var part_ID = jsPsych.data.get().values()[0].part_ID;
+        var participant = new Blob([part_ID], {type: "text/plain"})
+        fd.append("participant", participant);
 
         var postreq = $.ajax({
             url: '/recordings',

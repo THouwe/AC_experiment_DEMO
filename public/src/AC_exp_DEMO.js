@@ -355,7 +355,7 @@ var procedure_0dB = {
  }
 };
 
-SiNRT_timeline.timeline.push(instructions_SiNRT);
+// SiNRT_timeline.timeline.push(instructions_SiNRT);
 SiNRT_timeline.timeline.push(procedure_practiceSiNRT);
 SiNRT_timeline.timeline.push(procedure_0dB);
 SiNRT_timeline.timeline.push(after_block);
@@ -482,9 +482,9 @@ NVSRT_timeline.timeline.push(after_block);
 //////////////////////// randomise order of SRTs ///////////////////////////////
     var randomizedSRTblocks = jsPsych.randomization.shuffle([SiNRT_timeline, NVSRT_timeline]);
 
-      SRT_timeline.timeline = randomizedSRTblocks;
+      // SRT_timeline.timeline = randomizedSRTblocks;
       // SRT_timeline.timeline = [instructions_SRT, randomizedSRTblocks];
-      // timeline.push(SRT_timeline);
+      timeline.push(SRT_timeline);
 ////////////////////////////////////////////////////////////////////////////////
 
 
@@ -1056,8 +1056,8 @@ var procedure_list1NVS = {
 ////////////////////////// randomise SiN and NVS ///////////////////////////////
 var randomizedWordRecBlocks = jsPsych.randomization.shuffle([wordRecSiN_timeline, wordRecNVS_timeline]);
 
-  wordRec_timeline.timeline = [instructions_wordRec, randomizedWordRecBlocks];
-  // wordRec_timeline.timeline = randomizedWordRecBlocks;
+  // wordRec_timeline.timeline = [instructions_wordRec, randomizedWordRecBlocks];
+  wordRec_timeline.timeline = randomizedWordRecBlocks;
   // timeline.push(wordRec_timeline);
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -1095,6 +1095,8 @@ function startExpDEMO() {
     // timeline: [TT_timeline],
     // timeline: [welcome, instructions_general],
    preload_audio: audioFiles,
+   // timeline: [calib_timeline, TT_timeline, SRT_timeline,
+   //   FWDS_timeline, BWDS_timeline, wordRec_timeline],
    timeline: [calib_timeline, TT_timeline, instructions_SRT, SRT_timeline,
      FWDS_timeline, BWDS_timeline, instructions_wordRec, wordRec_timeline],
     use_webaudio: true,

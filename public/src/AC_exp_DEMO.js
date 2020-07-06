@@ -74,13 +74,13 @@ var DATE = YYYY + MM + DD;
       // html:  <input name='Part_ID type='text' />
       on_finish: function(data){
         data.responses = JSON.parse(data.responses);
-        // console.log("data.responses:" + data.responses)
+        console.log("data.responses: " + JSON.stringify(data.responses));
         jsPsych.data.addProperties({
           part_ID: data.responses.Part_ID,
         });
         // jsPsych.data.displayData();
         // console.log("part_ID:" + part_ID);
-        // console.log("data.responses:" + data.responses);
+        console.log("jsPsych data: " + JSON.stringify(jsPsych.data.get().values()));
       }
     };
 
@@ -296,8 +296,8 @@ var start_SiNRT = {
 };
 
 var stimuli_0dB = [
-  {stimulus: stimDir_SiN + "Speaker01_Digit5_0dB_SNR.wav", data: {screen_id: SiNRT_trials, dB_SNR:0, speaker:1, digit_id: "8"}},
-  {stimulus: stimDir_SiN + "Speaker05_Digit8_0dB_SNR.wav", data: {screen_id: SiNRT_trials, dB_SNR:0, speaker:5, digit_id: "5"}},
+  {stimulus: stimDir_SiN + "Speaker01_Digit5_0dB_SNR.wav", data: {screen_id: SiNRT_trials, dB_SNR:0, speaker:1, digit_id: "5"}},
+  {stimulus: stimDir_SiN + "Speaker05_Digit8_0dB_SNR.wav", data: {screen_id: SiNRT_trials, dB_SNR:0, speaker:5, digit_id: "8"}},
   {stimulus: stimDir_SiN + "Speaker06_Digit6_0dB_SNR.wav", data: {screen_id: SiNRT_trials, dB_SNR:0, speaker:6, digit_id: "6"}},
   {stimulus: stimDir_SiN + "Speaker07_Digit3_0dB_SNR.wav", data: {screen_id: SiNRT_trials, dB_SNR:0, speaker:7, digit_id: "3"}},
   {stimulus: stimDir_SiN + "Speaker08_Digit2_0dB_SNR.wav", data: {screen_id: SiNRT_trials, dB_SNR:0, speaker:8, digit_id: "2"}}
@@ -343,7 +343,6 @@ var procedure_practiceSiNRT = {
  timeline: [fixation_cross, practice_trial_SiN, start_SiNRT]
 };
 
-// Attempt by fh. To no avail.
 var wrapper_0dB = {
    timeline_variables: stimuli_0dB,
    timeline: SiNRT_trials
@@ -356,8 +355,8 @@ var procedure_0dB = {
  }
 };
 
-// SiNRT_timeline.timeline.push(instructions_SiNRT);
-// SiNRT_timeline.timeline.push(procedure_practiceSiNRT);
+SiNRT_timeline.timeline.push(instructions_SiNRT);
+SiNRT_timeline.timeline.push(procedure_practiceSiNRT);
 SiNRT_timeline.timeline.push(procedure_0dB);
 SiNRT_timeline.timeline.push(after_block);
 
@@ -968,7 +967,7 @@ var procedure_list1SiN = {
 };
 
 /////// PUSH wordRec TRIALS TO ITS TIMELINE ///////////
-    wordRecSiN_timeline.timeline.push(instructions_wordRec_SiN);
+    // wordRecSiN_timeline.timeline.push(instructions_wordRec_SiN);
     wordRecSiN_timeline.timeline.push(start_wordRecSiN);
     wordRecSiN_timeline.timeline.push(procedure_list1SiN);
     // timeline.push(wordRecSiN_timeline);
@@ -1047,7 +1046,7 @@ var procedure_list1NVS = {
 // timeline.push(procedure_list1NVS);
 
 /////// PUSH wordRec TRIALS TO ITS TIMELINE ///////////
-    wordRecNVS_timeline.timeline.push(instructions_wordRec_NVS);
+    // wordRecNVS_timeline.timeline.push(instructions_wordRec_NVS);
     wordRecNVS_timeline.timeline.push(start_wordRecNVS);
     wordRecNVS_timeline.timeline.push(procedure_list1NVS);
     // timeline.push(wordRecNVS_timeline);
@@ -1057,8 +1056,8 @@ var procedure_list1NVS = {
 ////////////////////////// randomise SiN and NVS ///////////////////////////////
 var randomizedWordRecBlocks = jsPsych.randomization.shuffle([wordRecSiN_timeline, wordRecNVS_timeline]);
 
-  // wordRec_timeline.timeline = [instructions_wordRec, randomizedWordRecBlocks];
-  wordRec_timeline.timeline = randomizedWordRecBlocks;
+  wordRec_timeline.timeline = [instructions_wordRec, randomizedWordRecBlocks];
+  // wordRec_timeline.timeline = randomizedWordRecBlocks;
   // timeline.push(wordRec_timeline);
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -1100,10 +1099,10 @@ function startExpDEMO() {
      FWDS_timeline, BWDS_timeline, instructions_wordRec, wordRec_timeline],
     use_webaudio: true,
     // use_webaudio: true,
-    // on_interaction_data_update: function(data) {
-    //   var trial = jsPsych.currentTrial();
-    //   trial.data.event = data.event;
-    // },
+    on_interaction_data_update: function(data) {
+      var cTrial = jsPsych.currentTrial();
+      cTrial.data.event = data.event;
+    },
     on_finish: function() {
       $.ajax({
         type: "POST",

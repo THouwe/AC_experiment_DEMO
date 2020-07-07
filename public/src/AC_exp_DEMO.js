@@ -1103,7 +1103,8 @@ function startExpDEMO() {
     // use_webaudio: true,
     on_interaction_data_update: function(data) {
       var cTrial = jsPsych.currentTrial();
-      cTrial.data.event = data.event;
+      // cTrial.data.event = data.event;
+      cTrial.event = data.event;
     },
     on_finish: function() {
       $.ajax({
